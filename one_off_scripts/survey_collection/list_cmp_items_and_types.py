@@ -4,6 +4,10 @@ import os
 import lxml.etree as etree
 import urllib.request
 
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
+
 
 def list_alias_cmp_types(alias):
 
@@ -23,7 +27,8 @@ def list_alias_cmp_types(alias):
 
 
 def list_all_aliases():
-    url = 'https://server16313.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCollectionList/xml'
+    url = 'https://{}.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCollectionList/xml'.format(
+        os.environ['CDM_API_SERVER'])
     with urllib.request.urlopen(url) as response:
         coll_list_etree = etree.parse(response)
     return [i.text.strip('/') for i in coll_list_etree.findall('.//alias')]

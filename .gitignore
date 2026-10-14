@@ -16,3 +16,5 @@ AdminPanelExportedCsvs/*
 one_off_scripts/scraping_pages/Landings_scraped/*
 .DS_Store
 scrape_cDM_log.txt
+pyvenv
+.env

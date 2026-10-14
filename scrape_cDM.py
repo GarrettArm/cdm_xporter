@@ -123,7 +123,7 @@ class ScrapeAlias():
             logging.info('{} Elems_in_Collection_{}.json written'.format(self.alias, starting_position))
         if 'Elems_in_Collection_{}.xml'.format(starting_position) not in files:
             CdmAPI.write_xml_to_file(
-                CdmAPI.retrieve_elems_in_collection(alias, starting_position, chunksize, 'xml'),
+                CdmAPI.retrieve_elems_in_collection(self.alias, starting_position, chunksize, 'xml'),
                 filepath,
                 'Elems_in_Collection_{}'.format(starting_position))
             logging.info('{} Elems_in_Collection_{}.xml written'.format(self.alias, starting_position))
@@ -364,7 +364,7 @@ if __name__ == '__main__':
 
     """ Get specific collections' metadata/binaries """
 
-    for alias in ('p120701coll17',):
+    for alias in ('art-rl',):
         do_collection(alias)
 
     """ Get all collections' metadata/binaries """

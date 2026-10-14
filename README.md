@@ -15,3 +15,9 @@ look for the output in "../Cached_Cdm_files"
 cDM_api_call.py is merely a group of frequently used contentDM API calls.  It's useful as an import.  You will want to change the string specifying your contentDM server address.
 
 The test file can be run using pytest.
+
+Make a .env file:
+```
+CDM_API_SERVER=server12345
+CDM_BINARY_SERVER=cdm12345
+```
