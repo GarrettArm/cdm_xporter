@@ -20,4 +20,7 @@ Make a .env file:
 ```
 CDM_API_SERVER=server12345
 CDM_BINARY_SERVER=cdm12345
+COLLECTION_ALIAS=p12345coll1
 ```
+
+COLLECTION_ALIAS is the collection the first section of scrape_cDM.py scrapes.  It can be a comma-separated list, e.g. `COLLECTION_ALIAS=p12345coll1,p12345coll2`.

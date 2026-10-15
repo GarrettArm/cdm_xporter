@@ -5,8 +5,11 @@ import urllib
 from lxml import etree as ET
 import json
 import logging
+from dotenv import load_dotenv, find_dotenv
 
 import cDM_api_calls as CdmAPI
+
+load_dotenv(find_dotenv())
 
 
 WE_DONT_MIGRATE = {'p16313coll70', 'p120701coll11', 'LSUHSCS_JCM', 'UNO_SCC', 'p15140coll36', 'p15140coll57',
@@ -283,7 +286,11 @@ class ScrapeAlias():
             binary.decode('utf-8')
             return False
         except UnicodeDecodeError:
-            CdmAPI.write_binary_to_file(binary, filepath, pointer, filetype)
+            filetype_mapping = {
+                'application/pdf': 'pdf'
+            }
+            print('filepath, pointer, filetype:', filepath, pointer, filetype_mapping[filetype])
+            CdmAPI.write_binary_to_file(binary, filepath, pointer, filetype_mapping[filetype])
             logging.info('{} {} root hidden_pdf written'.format(filepath, pointer))
             return True
 
@@ -364,7 +371,11 @@ if __name__ == '__main__':
 
     """ Get specific collections' metadata/binaries """
 
-    for alias in ('art-rl',):
+    # COLLECTION_ALIAS can be one alias or a comma-separated list
+    collection_aliases = [i.strip() for i in os.environ.get('COLLECTION_ALIAS', '').split(',') if i.strip()]
+    if not collection_aliases:
+        raise RuntimeError('Set the COLLECTION_ALIAS environment variable, e.g. in a .env file (see README)')
+    for alias in collection_aliases:
         do_collection(alias)
 
     """ Get all collections' metadata/binaries """

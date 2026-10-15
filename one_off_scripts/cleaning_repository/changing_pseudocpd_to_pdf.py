@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+import argparse
 import os
 import re
 import json
@@ -8,7 +9,9 @@ from lxml import etree as ET
 file_match = re.compile(r'[0-9]+\.(xml|json)')
 filetype_match = re.compile(r'([0-9]+)\.cpd')
 
-source_dir = '/media/francis/Storage/LNP_Source_datas/CachedCdmFiles/LSU_LNP/'
+parser = argparse.ArgumentParser(description='Changes cpd objects that have a {pointer}.pdf in source_dir into pdf objects')
+parser.add_argument('source_dir', help='collection folder, e.g. Cached_Cdm_files/p17190coll7')
+source_dir = parser.parse_args().source_dir
 starting_file_list = [file for file in os.listdir(source_dir) if (file_match.match(file)) or ('Elems_in' in file)]
 subfolder = [file for file in os.listdir(source_dir) if os.path.isdir(os.path.join(source_dir, file))]
 full_dir = [file for file in os.listdir(source_dir)]
@@ -65,5 +68,5 @@ for file in starting_file_list:
         file_text = file_text.replace('"filetype":"cpd",', '"filetype":"pdf",')
 
     with open(os.path.join(source_dir, file), 'w') as f:
-        print(file, 'normal file wortted')
+        print(file, 'normal file written')
         f.write(file_text)
